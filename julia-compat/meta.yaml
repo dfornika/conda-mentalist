@@ -1,18 +1,33 @@
+{% set version='0.28.0' %}
+{% set md5='797b3920ef8d580a54705120fb624f7d' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
 package:
   name: julia-compat
-  version: "0.28.0"
-  
+  version: {{ version }}
+  md5: {{ md5 }}
+
 source:
-  git_url: https://github.com/JuliaLang/Compat.jl.git
-  git_tag: v0.28.0
+  fn: julia-compat-{{ version}}.tar.gz
+  url: https://github.com/JuliaLang/Compat.jl/archive/v{{ version }}.tar.gz
 
 requirements:
-  build:
-    - julia
   run:
-    - julia
-    
+    - julia {{ jl_range }}
+
 build:
+  string: {{ jl_prefix + '_' + build_number }}
   script_env:
     - JULIA_VERSION
 
@@ -25,5 +40,4 @@ test:
 
 about:
   home: https://github.com/JuliaLang/Compat.jl
-  license: MIT
   license_file: LICENSE.md
