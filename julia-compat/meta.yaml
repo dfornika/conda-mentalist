@@ -1,0 +1,29 @@
+package:
+  name: julia-compat
+  version: "0.28.0"
+  
+source:
+  git_url: https://github.com/JuliaLang/Compat.jl.git
+  git_tag: v0.28.0
+
+requirements:
+  build:
+    - julia
+  run:
+    - julia
+    
+build:
+  script_env:
+    - JULIA_VERSION
+
+test:
+  files:
+    - run_test.jl
+  commands:
+    - julia --version
+    - julia --check-bounds=yes run_test.jl
+
+about:
+  home: https://github.com/JuliaLang/Compat.jl
+  license: MIT
+  license_file: LICENSE.md
