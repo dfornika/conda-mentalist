@@ -1,0 +1,39 @@
+{% set version='0.13.0' %}
+{% set md5='ed4f7e8d1cf4606dd22293a1be68661c' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
+package:
+  name: julia-json
+  version: {{ version }}
+  md5: {{ md5 }}
+
+source:
+  fn: julia-json-{{ version}}.tar.gz
+  url: https://github.com/JuliaIO/JSON.jl/archive/v{{ version }}.tar.gz
+
+requirements:
+  build:
+    - julia {{ jl_range }}
+  run:
+    - julia {{ jl_range }}
+    - julia-compat 0.24.0
+
+build:
+  string: {{ jl_prefix + '_' + build_number }}
+  script_env:
+    - JULIA_VERSION
+
+about:
+  home: https://github.com/JuliaIO/JSON.jl
+  license_file: LICENSE.md
