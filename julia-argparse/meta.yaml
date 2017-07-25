@@ -1,6 +1,6 @@
 {% set version='0.5.0' %}
 {% set md5='97c29da32ac04d284db8b490ac82573f' %}
-{% set build_number='0' %}
+{% set build_number='1' %}
 
 {% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
   {% set jl_range='>=0.6.0a0,<0.7a0' %}
