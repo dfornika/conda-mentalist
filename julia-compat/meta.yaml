@@ -23,6 +23,8 @@ source:
   url: https://github.com/JuliaLang/Compat.jl/archive/v{{ version }}.tar.gz
 
 requirements:
+  build:
+    - julia {{ jl_range }}
   run:
     - julia {{ jl_range }}
 
@@ -30,13 +32,6 @@ build:
   string: {{ jl_prefix + '_' + build_number }}
   script_env:
     - JULIA_VERSION
-
-test:
-  files:
-    - run_test.jl
-  commands:
-    - julia --version
-    - julia --check-bounds=yes run_test.jl
 
 about:
   home: https://github.com/JuliaLang/Compat.jl
