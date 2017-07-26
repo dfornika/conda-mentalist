@@ -1,0 +1,43 @@
+{% set version='0.6.11' %}
+{% set md5='4ded7bfedec347e93b1ef1e1f5e5d4e7' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
+package:
+  name: julia-jld
+  version: {{ version }}
+
+source:
+  fn: julia-jld-{{ version }}.tar.gz
+  url: https://github.com/JuliaIO/JLD.jl/archive/v{{ version }}.tar.gz
+  md5: {{ md5 }}
+
+requirements:
+  build:
+    - julia {{ jl_range }}
+  run:
+    - julia {{ jl_range }}
+    - julia-hdf5
+    - julia-compat
+    - julia-fileio
+    - julia-legacystrings
+
+build:
+  number: {{ build_number }}
+  string: {{ jl_prefix + '_' + build_number }}
+  script_env:
+    - JULIA_VERSION
+
+about:
+  home: https://github.com/JuliaIO/JLD.jl
+  license_file: LICENSE.txt
