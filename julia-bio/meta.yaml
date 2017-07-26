@@ -1,0 +1,59 @@
+{% set version='0.4.7' %}
+{% set md5='12f1f82bfca9dc9766cdbda05e8ce721' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
+package:
+  name: julia-bio
+  version: {{ version }}
+
+source:
+  fn: julia-bio-{{ version }}.tar.gz
+  url: https://github.com/BioJulia/Bio.jl/archive/v{{ version }}.tar.gz
+  md5: {{ md5 }}
+
+requirements:
+  build:
+    - julia {{ jl_range }}
+  run:
+    - julia {{ jl_range }}
+    - julia-automa
+    - julia-bgzfstreams
+    - julia-biosymbols
+    - julia-biosequences
+    - julia-bufferedstreams
+    - julia-colortypes
+    - julia-combinatorics
+    - julia-distributions
+    - julia-ezxml
+    - julia-indexablebitvectors
+    - julia-intervaltrees
+    - julia-iterators
+    - julia-json
+    - julia-libz
+    - julia-lightgraphs
+    - julia-requests
+    - julia-uriparser
+    - julia-pairwisematrices
+    - julia-reexport
+    - julia-phylogenies
+
+build:
+  number: {{ build_number }}
+  string: {{ jl_prefix + '_' + build_number }}
+  script_env:
+    - JULIA_VERSION
+
+about:
+  home: https://github.com/BioJulia/Bio.jl
+  license_file: LICENSE.md
