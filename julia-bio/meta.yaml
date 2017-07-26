@@ -1,6 +1,6 @@
 {% set version='0.4.7' %}
 {% set md5='12f1f82bfca9dc9766cdbda05e8ce721' %}
-{% set build_number='0' %}
+{% set build_number='1' %}
 
 {% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
   {% set jl_range='>=0.6.0a0,<0.7a0' %}
@@ -44,7 +44,7 @@ requirements:
     - julia-lightgraphs
     - julia-requests
     - julia-uriparser
-    - julia-pairwisematrices
+    - julia-pairwiselistmatrices
     - julia-reexport
     - julia-phylogenies
 
