@@ -1,6 +1,6 @@
 {% set version='0.25.2' %}
 {% set md5='aa66376bf5190309556629bbcf992689' %}
-{% set build_number='0' %}
+{% set build_number='2' %}
 
 {% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
   {% set jl_range='>=0.6.0a0,<0.7a0' %}
@@ -16,11 +16,11 @@
 package:
   name: julia-compat
   version: {{ version }}
-  md5: {{ md5 }}
 
 source:
   fn: julia-compat-{{ version}}.tar.gz
   url: https://github.com/JuliaLang/Compat.jl/archive/v{{ version }}.tar.gz
+  md5: {{ md5 }}
 
 requirements:
   build:
@@ -29,6 +29,7 @@ requirements:
     - julia {{ jl_range }}
 
 build:
+  number: {{ build_number }}
   string: {{ jl_prefix + '_' + build_number }}
   script_env:
     - JULIA_VERSION

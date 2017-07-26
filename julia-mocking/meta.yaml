@@ -1,6 +1,6 @@
 {% set version='0.3.3' %}
 {% set md5='fc7ee9dab3c5b3dc465d16b0d32897ea' %}
-{% set build_number='0' %}
+{% set build_number='1' %}
 
 {% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
   {% set jl_range='>=0.6.0a0,<0.7a0' %}
@@ -27,7 +27,7 @@ requirements:
     - julia {{ jl_range }}
   run:
     - julia {{ jl_range }}
-    - julia-compat 0.25
+    - julia-compat 0.25.2
 
 build:
   string: {{ jl_prefix + '_' + build_number }}

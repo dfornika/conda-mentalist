@@ -1,6 +1,6 @@
 {% set version='2.1.1' %}
 {% set md5='b6f0f99d2712ce5166879876056efa8e' %}
-{% set build_number='0' %}
+{% set build_number='2' %}
 
 {% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
   {% set jl_range='>=0.6.0a0,<0.7a0' %}
@@ -19,7 +19,7 @@ package:
   md5: {{ md5 }}
 
 source:
-  fn: julia-lumberjack-{{ version}}.tar.gz
+  fn: julia-lumberjack-{{ version }}.tar.gz
   url: https://github.com/WestleyArgentum/Lumberjack.jl/archive/v{{ version }}.tar.gz
 
 requirements:
@@ -28,11 +28,12 @@ requirements:
   run:
     - julia {{ jl_range }}
     - julia-json
-    - julia-compat 0.17
-    - julia-stacktraces 0.1
+    - julia-compat
+    - julia-stacktraces
     - julia-mocking
 
 build:
+  number: {{ build_number }}
   string: {{ jl_prefix + '_' + build_number }}
   script_env:
     - JULIA_VERSION
