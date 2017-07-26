@@ -1,0 +1,42 @@
+{% set version='0.7.0' %}
+{% set md5='1f80cbb7c8ef859f8db3301addb74904' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
+package:
+  name: julia-bindeps
+  version: {{ version }}
+
+source:
+  fn: julia-bindeps-{{ version }}.tar.gz
+  url: https://github.com/JuliaLang/BinDeps.jl/archive/v{{ version }}.tar.gz
+  md5: {{ md5 }}
+
+requirements:
+  build:
+    - julia {{ jl_range }}
+  run:
+    - julia {{ jl_range }}
+    - julia-uriparser
+    - julia-sha
+    - julia-compat
+
+build:
+  number: {{ build_number }}
+  string: {{ jl_prefix + '_' + build_number }}
+  script_env:
+    - JULIA_VERSION
+
+about:
+  home: https://github.com/JuliaLang/BinDeps.jl
+  license_file: LICENSE.md
