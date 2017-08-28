@@ -1,0 +1,40 @@
+{% set version='0.4.0' %}
+{% set md5='2e524cd59c58f347d86c4020fe0490ab' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
+package:
+  name: julia-twiddle
+  version: {{ version }}
+
+source:
+  fn: julia-twiddle-{{ version }}.tar.gz
+  url: https://github.com/Ward9250/Twiddle.jl/archive/v{{ version }}.tar.gz
+  md5: {{ md5 }}
+
+requirements:
+  build:
+    - julia {{ jl_range }}
+  run:
+    - julia {{ jl_range }}
+    - julia-compat
+
+build:
+  number: {{ build_number }}
+  string: {{ jl_prefix + '_' + build_number }}
+  script_env:
+    - JULIA_VERSION
+
+about:
+  home: https://github.com/Ward9250/Twiddle.jl
+  license_file: LICENSE

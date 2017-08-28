@@ -1,0 +1,42 @@
+{% set version='1.2.1' %}
+{% set md5='fc90113f07af8abea9f4fe23bb83c343' %}
+{% set build_number='0' %}
+
+{% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
+  {% set jl_range='>=0.6.0a0,<0.7a0' %}
+  {% set jl_prefix='jl06' %}
+{% elif environ.get("JULIA_VERSION", "0.5") == "0.5" %}
+  {% set jl_range='>=0.5.0a0,<0.6a0' %}
+  {% set jl_prefix='jl05' %}
+{% else %}
+  {% set jl_range='>=0.4.0a0,<0.5a0' %}
+  {% set jl_prefix='jl04' %}
+{% endif %}
+
+package:
+  name: julia-biocore
+  version: {{ version }}
+
+source:
+  fn: julia-biocore-{{ version }}.tar.gz
+  url: https://github.com/BioJulia/BioCore.jl/archive/v{{ version }}.tar.gz
+  md5: {{ md5 }}
+
+requirements:
+  build:
+    - julia {{ jl_range }}
+  run:
+    - julia {{ jl_range }}
+    - julia-compat
+    - julia-automa
+    - julia-bufferedstreams
+
+build:
+  number: {{ build_number }}
+  string: {{ jl_prefix + '_' + build_number }}
+  script_env:
+    - JULIA_VERSION
+
+about:
+  home: https://github.com/BioJulia/BioCore.jl
+  license_file: LICENSE
