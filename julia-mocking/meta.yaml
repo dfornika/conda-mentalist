@@ -1,6 +1,6 @@
 {% set version='0.3.3' %}
 {% set md5='fc7ee9dab3c5b3dc465d16b0d32897ea' %}
-{% set build_number='1' %}
+{% set build_number='2' %}
 
 {% if environ.get("JULIA_VERSION", "0.6") == "0.6" %}
   {% set jl_range='>=0.6.0a0,<0.7a0' %}
@@ -16,18 +16,18 @@
 package:
   name: julia-mocking
   version: {{ version }}
-  md5: {{ md5 }}
 
 source:
   fn: julia-mocking-{{ version}}.tar.gz
   url: https://github.com/invenia/Mocking.jl/archive/v{{ version }}.tar.gz
-
+  md5: {{ md5 }}
+   
 requirements:
   build:
     - julia {{ jl_range }}
   run:
     - julia {{ jl_range }}
-    - julia-compat 0.25.2
+    - julia-compat
 
 build:
   string: {{ jl_prefix + '_' + build_number }}
